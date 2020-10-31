@@ -4,6 +4,13 @@ H = 3
 
 
 def find_side_lenght(N, W, H):
+    if (type(N) or type(W) or type(H)) not in [int, float]:
+        raise TypeError('The input must be positive numbers')
+    if N == 0:
+        return 0
+    if N < 0 or W <= 0 or H <= 0:
+        raise ValueError('The number/width/height must be a positive value')
+
     array = [1]
     index = 1
 

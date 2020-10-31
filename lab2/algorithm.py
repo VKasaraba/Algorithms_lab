@@ -2,6 +2,12 @@ from linkedlist import LinkedList
 
 
 def find_side_lenght(N, W, H):
+    if (type(N) or type(W) or type(H)) not in [int, float]:
+        raise TypeError('The input must be positive numbers')
+    if N == 0:
+        return 0
+    if N < 0 or W <= 0 or H <= 0:
+        raise ValueError('The number/width/height must be a positive value')
 
     linked_list = LinkedList()
     linked_list.add_to_end(1)
