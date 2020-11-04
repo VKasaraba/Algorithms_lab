@@ -1,4 +1,4 @@
-from algorithm import find_side_lenght
+from find_lenght_algorithm import find_side_length
 import csv
 
 with open('bugtrk_in.csv', 'r') as file:
@@ -7,9 +7,9 @@ with open('bugtrk_in.csv', 'r') as file:
         N, W, H = row
 
 if __name__ == '__main__':
-    side_lenght = find_side_lenght(int(N), int(W), int(H))
-    print(side_lenght)
+    side_length = find_side_length(int(N), int(W), int(H))
+    print(side_length)
 
     with open('bugtrk_out.csv', 'w') as file:
         writer = csv.writer(file)
-        file.write(str(side_lenght))
+        file.write(str(side_length))
