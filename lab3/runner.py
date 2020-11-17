@@ -19,7 +19,7 @@ with open('gamsrv_in.csv', 'r') as file:
 
 
 if __name__ == '__main__':
-    min_distance = find_min_distance(int(N), clients, graph)
+    min_distance = find_min_distance(int(N), clients, graph, int(M))
     print(min_distance)
 
     with open('gamsrv_out.csv', 'w') as file:

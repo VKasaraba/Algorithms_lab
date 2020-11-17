@@ -4,17 +4,24 @@ import sys
 graph = None
 number_of_vertexes = None
 clients = None
-
 vertex_distance = None
 parent_vertexes = None
-min_distance_to_server = sys.maxsize
+min_distance_to_server = None
 
 
-def find_min_distance(N, C, G):
+def find_min_distance(N, C, G, M):
     global graph
     global number_of_vertexes
     global clients
     global min_distance_to_server
+
+    if (type(N) != int) or (type(M) != int) or (type(C) != list) or (type(G) != list):
+        raise TypeError('The number of vertexes/edges must be an integer, the graph must be a list')
+    if not ((3 <= N <= 1000) and (2 <= M <= 1000) and (len(C) > 0) and (len(G) > 3)):
+        raise ValueError('The number of vertexes must be between 3 and 1000, the number of edges must be between 2 and 1000, '
+                         'the number of clients must be al least 1, number of vertexes must be at least 4 (where 2 are extra)')
+
+    min_distance_to_server = sys.maxsize
     number_of_vertexes = N
     graph = G
     clients = C
@@ -26,26 +33,27 @@ def find_min_distance(N, C, G):
                 min_distance_to_server = dejkstra(graph, start_vertex)
     return min_distance_to_server
 
+
 def dejkstra(graph: list, start_vertex: int):
     init_graph_vars(graph, start_vertex)
 
     available_vertexes_queue = PriorityQueue()
-    available_vertexes_queue.put((0, start_vertex))  # [(0,4)]
+    available_vertexes_queue.put((0, start_vertex))
 
     while not available_vertexes_queue.empty():
-        vertex_to_check = available_vertexes_queue.get()[1]  # 4 #5 #3
-        for child_vertex_tuple in graph[vertex_to_check]:  # [(3, 80), (2, 100), (5, 50)] #[(4, 50), (6, 20)] #[(1, 10), (2, 40), (4, 80)]
-            child_vertex = child_vertex_tuple[0]  # 3~ 2~ 5~ 4~ 6~ 1~ 2
-            distance_to_child_vertex = vertex_distance[vertex_to_check] + child_vertex_tuple[1]  # 80~ 100~ 50~ 80~ 90
+        vertex_to_check = available_vertexes_queue.get()[1]
+        for child_vertex_tuple in graph[vertex_to_check]:
+            child_vertex = child_vertex_tuple[0]
+            distance_to_child_vertex = vertex_distance[vertex_to_check] + child_vertex_tuple[1]
             if relax_edge(child_vertex, vertex_to_check, distance_to_child_vertex):
-                available_vertexes_queue.put((distance_to_child_vertex, child_vertex))  # [(50, 5), ~(80, 3)~, (80,5), (100,2), (90,3)]:
-    return get_max_distance_to_clients();
+                available_vertexes_queue.put((distance_to_child_vertex, child_vertex))
+    return get_max_distance_to_clients()
 
 
 def relax_edge(child_vertex, parent_vertex, distance):
     if vertex_distance[child_vertex] > distance:
-        parent_vertexes[child_vertex] = parent_vertex  # [ , 3, 4, 4, , 4, 5]
-        vertex_distance[child_vertex] = distance  # [ , 90, 100, 80, ,50, 80]
+        parent_vertexes[child_vertex] = parent_vertex
+        vertex_distance[child_vertex] = distance
         return True
     return False
 
