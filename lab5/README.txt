@@ -2,7 +2,7 @@
 
 
 - How to execute: 
-1) Download a project from github: https://github.com/VKasaraba/Algorithms_lab.git
+1) Download a project from github: `git clone https://github.com/VKasaraba/Algorithms_lab.git`
 2) Open naive_algo_in_csv and write your string on the 1st line, and the pattern on the 2nd line.
 	Example:
 	Internet Of Things
